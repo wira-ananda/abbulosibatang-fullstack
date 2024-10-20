@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // atau "mysql" tergantung database
+  url      = env("DATABASE_URL") // gunakan environment variable untuk koneksi
+}
+
+model Organization {
+  id          Int       @id @default(autoincrement())
+  name        String // Nama organisasi
+  foundedYear Int // Tahun didirikan
+  description String?
+  alumni      IPBA[] // Relasi ke alumni
+  members     Member[] // Relasi ke pengurus
+  projects    Project[] // Relasi ke program kerja
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Dewan {
+  id               Int    @id @default(autoincrement())
+  masaKepengurusan Int    @unique
+  pradanaPutra     String
+  pradanaPutri     String
+  keraniPutra      String
+  keraniPutri      String
+  juruUangPutra    String
+  juruUangPutri    String
+}
+
+model Member {
+  id        Int     @id @default(autoincrement())
+  name      String
+  role      String // Peran di organisasi, contoh: Ketua, Sekretaris, dll
+  startYear Int // Tahun mulai menjabat
+  endYear   Int? // Tahun berakhir menjabat (opsional jika belum selesai)
+  isActive  Boolean @default(true)
+
+  // Relasi
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  name        String // Nama program kerja
+  description String?
+  startDate   DateTime // Tanggal mulai program
+  endDate     DateTime? // Tanggal berakhir (opsional)
+  status      ProjectStatus @default(PLANNED) // Status program kerja
+
+  // Relasi
+  Organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum ProjectStatus {
+  PLANNED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+model IPBA {
+  id         Int      @id @default(autoincrement())
+  name       String
+  nickname   String   @unique
+  phone      String?
+  address    String?
+  batch      Int // Angkatan dari alumni
+  graduation Int // Tahun lulus
+  isActive   Boolean  @default(true) // Status aktif alumni
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // Relasi
+  Organization   Organization? @relation(fields: [organizationId], references: [id])
+  organizationId Int?
+}

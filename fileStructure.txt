@@ -1,0 +1,63 @@
+/project-root
+  /pages                   # 1. Folder untuk tampilan web atau UI (React/Next.js)
+    /api                   # API routes untuk Next.js
+      /organization        # API routes untuk organisasi
+        index.ts           # Endpoint untuk GET (list organizations) dan POST (create organization)
+        [id].ts            # Dynamic route untuk GET (organization by ID), PUT, DELETE
+      /member              # API routes untuk anggota
+        index.ts           # Endpoint untuk GET (list members) dan POST (create member)
+        [id].ts            # Dynamic route untuk GET (member by ID), PUT, DELETE
+      /project             # API routes untuk proyek
+        index.ts           # Endpoint untuk GET (list projects) dan POST (create project)
+        [id].ts            # Dynamic route untuk GET (project by ID), PUT, DELETE
+      /ipba                # API routes untuk alumni
+        index.ts           # Endpoint untuk GET (list alumni) dan POST (create alumni)
+        [id].ts            # Dynamic route untuk GET (alumni by ID), PUT, DELETE
+    /components            # Komponen yang dapat digunakan kembali untuk frontend
+      Header.tsx           # Contoh komponen Header
+      Footer.tsx           # Contoh komponen Footer
+    /organization          # Halaman untuk manajemen organisasi
+      index.tsx            # Page untuk list semua organisasi
+      [id].tsx             # Page untuk detail organisasi berdasarkan ID
+    /member                # Halaman untuk manajemen anggota
+      index.tsx            # Page untuk list semua anggota
+      [id].tsx             # Page untuk detail anggota berdasarkan ID
+    /project               # Halaman untuk manajemen proyek
+      index.tsx            # Page untuk list semua proyek
+      [id].tsx             # Page untuk detail proyek berdasarkan ID
+    /ipba                  # Halaman untuk manajemen alumni
+      index.tsx            # Page untuk list semua alumni
+      [id].tsx             # Page untuk detail alumni berdasarkan ID
+    /_app.tsx              # Root component untuk aplikasi Next.js
+    /index.tsx             # Landing page atau home page
+
+  /services                # 2. Folder untuk komunikasi API menggunakan Axios
+    /api                   # Folder untuk service API
+      axiosConfig.ts       # Konfigurasi dasar Axios, seperti baseURL
+      organizationService.ts # Fungsi Axios untuk memanggil API organisasi
+      memberService.ts      # Fungsi Axios untuk memanggil API anggota
+      projectService.ts     # Fungsi Axios untuk memanggil API proyek
+      ipbaService.ts        # Fungsi Axios untuk memanggil API alumni
+
+  /prisma                  # 3. Folder untuk Prisma dan interaksi dengan DB
+    /migrations            # Folder untuk migrasi database Prisma
+    schema.prisma          # Schema Prisma (model DB)
+    seed.ts                # File untuk seeding awal (jika diperlukan)
+
+  /_db                     # Prisma client instance dan method DB interaction
+    index.ts               # Setup Prisma client dan export methods untuk query DB
+      - findUnique         # Fungsi untuk findUnique (data by ID, dsb.)
+      - create             # Fungsi untuk create (register baru)
+      - update             # Fungsi untuk update (patch/put)
+      - delete             # Fungsi untuk delete (hapus)
+
+  /public                  # Folder untuk aset statis (gambar, logo, dsb.)
+    logo.png               # Contoh file logo
+
+  /styles                  # Folder untuk file CSS atau styling
+    globals.css            # Global CSS file
+    Home.module.css        # Module CSS untuk halaman home
+
+  next.config.js           # Konfigurasi Next.js
+  package.json             # File dependencies dan script npm
+  tsconfig.json            # Konfigurasi TypeScript
